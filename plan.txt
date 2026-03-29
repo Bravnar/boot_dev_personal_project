@@ -1,0 +1,19 @@
+
+# A Reddit TUI using Textual library and using Reddit simple post retrieval API
+
+1) await for Reddit API keys and validation
+2) write the client
+  a) client.py - the main entry point to the part of the tool that will be fetching data
+  b) dataclass for RedditMockPost that will mimic the data received from reddit
+  c) dataclass for RedditMockCommunity that will help me navigate between subreddits
+  d) a simple wrapper for requests that will allow for scalability with **kwargs
+
+3) Textual
+  a) come up with the simple app design
+  b) left sidebar
+  c) header
+  d) footer
+  e) main pane
+
+4) Data storage and synchronous fetching
+
