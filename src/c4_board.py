@@ -33,6 +33,8 @@ class ConnectFourBoard:
             new_index = row_index - 1
             self.place(color, column, new_index)
 
+    # TODO: check_win()
+
 
 if __name__ == "__main__":
     game = ConnectFourBoard()
