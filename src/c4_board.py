@@ -4,10 +4,10 @@ BLUE = "🔵"
 
 
 class ConnectFourBoard:
-    def __init__(self, x=6, y=7):
-        self.height = x
-        self.width = y
-        self.board = [[EMPTY for x in range(self.width)] for y in range(self.height)]
+    def __init__(self, y=6, x=7):
+        self.height = y
+        self.width = x
+        self.board = [[EMPTY for i in range(self.width)] for k in range(self.height)]
 
     def __repr__(self):
         top_border = f"╔{'═' * (self.width * 3 + 1)}╗\n"
@@ -29,21 +29,31 @@ class ConnectFourBoard:
         target = self.board[row_index][column]
         if target == EMPTY:
             self.board[row_index][column] = color
+            return (row_index, column)
         else:
             new_index = row_index - 1
-            self.place(color, column, new_index)
+            return self.place(color, column, new_index)
 
     # TODO: check_win()
+
+    def check_win(self, color, y, x):
+        pass
 
 
 if __name__ == "__main__":
     game = ConnectFourBoard()
-    turn = -1
+    turn = 0
+    red = True
     while True:
         turn += 1
         print(game)
         try:
             player_input = int(input("Select column where to place:\n"))
-            game.place(BLUE if turn % 2 else RED, player_input)
+            color = RED if red else BLUE
+            y, x = game.place(color, player_input)
+            print(f"Target: y={y}, x={x}")
+            red = not red
+            if turn >= 8:
+                game.check_win(color, y, x)
         except Exception as e:
             print(e)
