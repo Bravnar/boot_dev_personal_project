@@ -44,16 +44,19 @@ if __name__ == "__main__":
     game = ConnectFourBoard()
     turn = 0
     red = True
+    og_prompt = "Select column where to place:\n"
+    prompt = og_prompt
     while True:
         turn += 1
         print(game)
         try:
-            player_input = int(input("Select column where to place:\n"))
             color = RED if red else BLUE
+            player_input = int(input(f"{color}'s turn!\n{prompt}"))
             y, x = game.place(color, player_input)
+            prompt = og_prompt
             print(f"Target: y={y}, x={x}")
             red = not red
             if turn >= 8:
                 game.check_win(color, y, x)
         except Exception as e:
-            print(e)
+            prompt = f"{str(e)}:\n"
