@@ -39,24 +39,29 @@ class ConnectFourBoard:
     def check_win(self, color, y, x):
         pass
 
+    def start(self):
+        turn = 0
+        red = True
+        og_prompt = f"Select column (1-{self.width}):\n"
+        prompt = og_prompt
+        while True:  # switch to game over condition
+            turn += 1
+            print(self)
+            try:
+                color = RED if red else BLUE
+                player_input = int(input(f"{color}'s turn!\n{prompt}"))
+                y, x = self.place(color, player_input)
+                prompt = og_prompt
+                print(f"Target: y={y}, x={x}")
+                red = not red
+                if turn >= 8:
+                    self.check_win(color, y, x)
+            except ValueError:
+                prompt = "Please enter a valid column number:\n"
+            except Exception as e:
+                prompt = f"{str(e)}:\n"
+
 
 if __name__ == "__main__":
     game = ConnectFourBoard()
-    turn = 0
-    red = True
-    og_prompt = "Select column where to place:\n"
-    prompt = og_prompt
-    while True:
-        turn += 1
-        print(game)
-        try:
-            color = RED if red else BLUE
-            player_input = int(input(f"{color}'s turn!\n{prompt}"))
-            y, x = game.place(color, player_input)
-            prompt = og_prompt
-            print(f"Target: y={y}, x={x}")
-            red = not red
-            if turn >= 8:
-                game.check_win(color, y, x)
-        except Exception as e:
-            prompt = f"{str(e)}:\n"
+    game.start()
