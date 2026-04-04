@@ -1,14 +1,35 @@
-# 2 Player Connect Four
+# Connect Four CLI
 
-## Instructions
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
 
-1. Pull the repository
+A terminal-based implementation of Connect Four featuring a coordinate-based gravity engine and vector-traversal win detection.
 
-- `git clone https://github.com/Bravnar/boot_dev_personal_project.git connect_four`
+---
 
-1. Run `uv sync`
-2. Give permission to the launch script to be executed
+## Installation
 
-- `chmod +x launch.sh`
+### 1. Clone the Repository
 
-1. Run `./launch.sh`
+```bash
+git clone [https://github.com/Bravnar/boot_dev_personal_project.git](https://github.com/Bravnar/boot_dev_personal_project.git) connect_four
+cd connect_four
+```
+
+### 2. Environment Setup
+
+This project requires **uv** for dependency management:
+
+```bash
+uv sync
+```
+
+### 3. Execution
+
+Grant execution permissions and run the launch script
+
+```bash
+chmod +x launch.sh
+./launch.sh
+```
+
+### 4. And that's it
