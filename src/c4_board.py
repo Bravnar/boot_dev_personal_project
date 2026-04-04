@@ -9,13 +9,20 @@ BLUE = "🔵"
 
 class ConnectFourBoard:
     def __init__(self, y=6, x=7):
+        self.red = True
         self.height = y
         self.width = x
+
         self.board = [[EMPTY for i in range(self.width)] for k in range(self.height)]
+        self.prompt = f"Select column (1-{self.width}):\n"
+        self.winner = None
+        self.turn = 0
 
     def __repr__(self):
-        top_border = f"╔{'═' * (self.width * 3 + 1)}╗\n"
-        msg = f"Height: {self.height} | Width: {self.width}\n{top_border}"
+        col_range = [str(x) for x in range(1, self.width + 1)]
+        top_border = f"╔═{'══'.join(col_range)}══╗\n"
+        header = f"\n{top_border}"
+        msg = f"{header}"
 
         for row in self.board:
             row_msg = " "
@@ -38,47 +45,65 @@ class ConnectFourBoard:
             new_index = row_index - 1
             return self.place(color, column, new_index)
 
-    # TODO: check_win()
+    def _count_in_direction(self, color, y, x, dy, dx):
+        count = 0
+        curr_y, curr_x = y + dy, x + dx
+        while self._can_go(curr_y, curr_x) and self.board[curr_y][curr_x] == color:
+            count += 1
+            curr_y += dy
+            curr_x += dx
+        return count
+
+    def _can_go(self, height, width) -> bool:
+        try:
+            _ = self.board[height][width]
+        except IndexError:
+            return False
+        return True
+
+    def _show_winner(self, color):
+        self._clear_screen()
+        print("PlaceHolder WinnerScreen")  # TODO Create WinnerScreen class
+        input()
+        exit(0)
 
     def check_win(self, color, y, x):
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
-        for dx, dy in directions:
-            count = 0
-            if count >= 3:
-                return True
-        # continue this logic
+        for dy, dx in directions:
+            count = 1
+            count += self._count_in_direction(color, y, x, dy, dx)
+            count += self._count_in_direction(color, y, x, -dy, -dx)
+            # print(f"{color} win count: {count}")
+            if count >= 4:
+                self._show_winner(color)
 
-    def _clear_screen(self, turn=0):
-        if turn == 0:
-            print("PlaceHolder Start Screen")
+    def _clear_screen(self):
+        if self.turn == 0:
+            print("PlaceHolder Start Screen")  # TODO Create StartScreen class
             input()
         subprocess.run("cls" if os.name == "nt" else "clear")
 
-    def start(self):
-        self._clear_screen()
-        turn = 0
-        red = True
-        og_prompt = f"Select column (1-{self.width}):\n"
-        prompt = og_prompt
+    def _gameplay_loop(self):
         while True:  # switch to game over condition
-            turn += 1
-            # print(self)
+            self.turn += 1
             sys.stdout.write(str(self))
             try:
-                color = RED if red else BLUE
-                player_input = int(input(f"{color}'s turn!\n{prompt}"))
+                color = RED if self.red else BLUE
+                player_input = int(input(f"\n{color}'s turn!\n{self.prompt}"))
                 y, x = self.place(color, player_input - 1)
-                prompt = og_prompt
-                # print(f"Target: y={y}, x={x}")
-                red = not red
-                if turn >= 8:
+                self.red = not self.red
+                if self.turn >= 7:
                     self.check_win(color, y, x)
                 sys.stdout.flush()
-                self._clear_screen(turn)
+                self._clear_screen()
             except ValueError:
-                prompt = "Please enter a valid column number:\n"
+                self.prompt = "Please enter a valid column number:\n"
             except Exception as e:
-                prompt = f"{str(e)}:\n"
+                self.prompt = f"{str(e)}:\n"
+
+    def start(self):
+        self._clear_screen()
+        self._gameplay_loop()
 
 
 if __name__ == "__main__":
