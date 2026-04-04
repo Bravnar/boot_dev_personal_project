@@ -1,3 +1,5 @@
+import sys
+
 EMPTY = "⚫️"
 RED = "🔴"
 BLUE = "🔵"
@@ -51,16 +53,18 @@ class ConnectFourBoard:
         prompt = og_prompt
         while True:  # switch to game over condition
             turn += 1
-            print(self)
+            # print(self)
+            sys.stdout.write(str(self))
             try:
                 color = RED if red else BLUE
                 player_input = int(input(f"{color}'s turn!\n{prompt}"))
-                y, x = self.place(color, player_input)
+                y, x = self.place(color, player_input - 1)
                 prompt = og_prompt
-                print(f"Target: y={y}, x={x}")
+                # print(f"Target: y={y}, x={x}")
                 red = not red
                 if turn >= 8:
                     self.check_win(color, y, x)
+                sys.stdout.flush()
             except ValueError:
                 prompt = "Please enter a valid column number:\n"
             except Exception as e:
