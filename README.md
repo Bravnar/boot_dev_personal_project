@@ -11,7 +11,7 @@ A terminal-based implementation of Connect Four featuring a coordinate-based gra
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/Bravnar/boot_dev_personal_project.git](https://github.com/Bravnar/boot_dev_personal_project.git) connect_four
+git clone https://github.com/Bravnar/boot_dev_personal_project.git connect_four
 cd connect_four
 ```
 
