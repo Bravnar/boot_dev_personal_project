@@ -33,3 +33,10 @@ chmod +x launch.sh
 ```
 
 ### 4. And that's it
+
+### 5. Roadmap
+
+- Visuals improvement: replacing the placeholder screens
+- Play with AI agent: hooking up a Google API agent (with your key) to play against
+- Play against standard AI: writing code for AI logic with multiple difficulties
+- Textual support: better interface
