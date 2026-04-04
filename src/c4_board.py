@@ -37,7 +37,12 @@ class ConnectFourBoard:
     # TODO: check_win()
 
     def check_win(self, color, y, x):
-        pass
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        for dx, dy in directions:
+            count = 0
+            if count >= 3:
+                return True
+        # continue this logic
 
     def start(self):
         turn = 0
