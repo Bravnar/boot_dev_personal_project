@@ -1,4 +1,6 @@
 import sys
+import subprocess
+import os
 
 EMPTY = "⚫️"
 RED = "🔴"
@@ -46,7 +48,14 @@ class ConnectFourBoard:
                 return True
         # continue this logic
 
+    def _clear_screen(self, turn=0):
+        if turn == 0:
+            print("PlaceHolder Start Screen")
+            input()
+        subprocess.run("cls" if os.name == "nt" else "clear")
+
     def start(self):
+        self._clear_screen()
         turn = 0
         red = True
         og_prompt = f"Select column (1-{self.width}):\n"
@@ -65,6 +74,7 @@ class ConnectFourBoard:
                 if turn >= 8:
                     self.check_win(color, y, x)
                 sys.stdout.flush()
+                self._clear_screen(turn)
             except ValueError:
                 prompt = "Please enter a valid column number:\n"
             except Exception as e:
